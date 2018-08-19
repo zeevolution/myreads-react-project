@@ -1,10 +1,8 @@
 import React from 'react';
 import './styles/global';
 
-const App = () => (
-  <div>
-    <h1>Hello World</h1>
-  </div>
-);
+import Routes from './routes';
+
+const App = () => <Routes />;
 
 export default App;
