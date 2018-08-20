@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import BookShelf from '../../components/BookShelf/BookShelf';
 
 class Main extends Component {
   render() {
     return (
       <div>
-        <h1>Main Page</h1>
+        <BookShelf />
       </div>
     );
   }
