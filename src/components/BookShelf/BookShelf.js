@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Book from '../Book/Book';
 import {
   ListBooksTitle,
   ListBooksContent,
@@ -21,8 +22,12 @@ class BookShelf extends Component {
               <BookshelfTitle>Title</BookshelfTitle>
               <BookshelfBooks>
                 <BookGrid>
-                  <li>Book 1</li>
-                  <li>Book 2</li>
+                  <li>
+                    <Book />
+                  </li>
+                  <li>
+                    <Book />
+                  </li>
                 </BookGrid>
               </BookshelfBooks>
             </Bookshelf>
