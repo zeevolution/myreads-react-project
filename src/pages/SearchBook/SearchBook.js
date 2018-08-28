@@ -76,7 +76,7 @@ class SearchBook extends Component {
             ) : books.length ? (
               books.map(book => (
                 <li key={book.id}>
-                  <Book book={book} onShelfChange={this.shelfChanged} />
+                  <Book book={book} onShelfChange={this.shelfChanged} fromSearch={true} />
                 </li>
               ))
             ) : query ? (

@@ -30,7 +30,6 @@ class BookShelf extends Component {
         books: books,
         loading: false,
       });
-      console.log(books);
     });
   }
 
@@ -67,7 +66,7 @@ class BookShelf extends Component {
                     ) : (
                       books.filter(book => (book.shelf === shelf.name ? true : false)).map(book => (
                         <li key={book.id}>
-                          <Book book={book} onShelfChange={this.shelfChanged} />
+                          <Book book={book} onShelfChange={this.shelfChanged} fromSearch={false} />
                         </li>
                       ))
                     )}
