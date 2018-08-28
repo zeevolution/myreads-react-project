@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Book from '../Book/Book';
 import {
   ListBooksTitle,
@@ -8,9 +9,36 @@ import {
   BookshelfBooks,
   BookGrid,
 } from './BookShelfStyle';
+import * as BooksAPI from '../../utils/BooksAPI';
 
 class BookShelf extends Component {
+  static propTypes = {
+    shelfs: PropTypes.array.isRequired,
+  };
+
+  state = {
+    books: [],
+  };
+
+  componentDidMount() {
+    BooksAPI.getAll().then(books => {
+      this.setState({ books: books });
+      console.log(books);
+    });
+  }
+
+  shelfChanged = (book, event) => {
+    BooksAPI.update(book, event.target.value).then(shelfs => {
+      BooksAPI.getAll().then(books => {
+        this.setState({ books: books });
+      });
+    });
+  };
+
   render() {
+    const { shelfs } = this.props;
+    const { books } = this.state;
+
     return (
       <div>
         <ListBooksTitle>
@@ -18,19 +46,20 @@ class BookShelf extends Component {
         </ListBooksTitle>
         <ListBooksContent>
           <div>
-            <Bookshelf>
-              <BookshelfTitle>Title</BookshelfTitle>
-              <BookshelfBooks>
-                <BookGrid>
-                  <li>
-                    <Book />
-                  </li>
-                  <li>
-                    <Book />
-                  </li>
-                </BookGrid>
-              </BookshelfBooks>
-            </Bookshelf>
+            {shelfs.map(shelf => (
+              <Bookshelf key={shelf.name}>
+                <BookshelfTitle>{shelf.display_name}</BookshelfTitle>
+                <BookshelfBooks>
+                  <BookGrid>
+                    {books.filter(book => (book.shelf === shelf.name ? true : false)).map(book => (
+                      <li key={book.id}>
+                        <Book book={book} onShelfChange={this.shelfChanged} />
+                      </li>
+                    ))}
+                  </BookGrid>
+                </BookshelfBooks>
+              </Bookshelf>
+            ))}
           </div>
         </ListBooksContent>
       </div>

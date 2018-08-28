@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   TheBook,
   BookTitle,
@@ -10,20 +11,22 @@ import {
 } from './BookStyle';
 
 class Book extends Component {
+  static propTypes = {
+    book: PropTypes.object.isRequired,
+    onShelfChange: PropTypes.func.isRequired,
+  };
+
   render() {
+    const { book, onShelfChange } = this.props;
+    let bookShelf = book.shelf;
+
     return (
       <TheBook>
         <BookTop>
-          <BookCover
-            width="128"
-            height="193"
-            url="http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api"
-          />
+          <BookCover width="128" height="193" url={book.imageLinks.thumbnail} />
           <BookShelfChanger>
-            <select>
-              <option value="move" disabled>
-                Move to...
-              </option>
+            <select defaultValue={bookShelf} onChange={event => onShelfChange(book, event)}>
+              <option value="move">Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>
@@ -31,8 +34,10 @@ class Book extends Component {
             </select>
           </BookShelfChanger>
         </BookTop>
-        <BookTitle>To Kill a Mockingbird</BookTitle>
-        <BookAuthors>Harper Lee</BookAuthors>
+        <BookTitle>{book.title}</BookTitle>
+        {book.authors.map(author => (
+          <BookAuthors key={author}>{author}</BookAuthors>
+        ))}
       </TheBook>
     );
   }
