@@ -26,7 +26,9 @@ class Book extends Component {
           <BookCover width="128" height="193" url={book.imageLinks.thumbnail} />
           <BookShelfChanger>
             <select defaultValue={bookShelf} onChange={event => onShelfChange(book, event)}>
-              <option value="move">Move to...</option>
+              <option value="move" disabled>
+                Move to...
+              </option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>

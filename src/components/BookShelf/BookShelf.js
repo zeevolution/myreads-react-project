@@ -17,27 +17,36 @@ class BookShelf extends Component {
   };
 
   state = {
+    loading: false,
     books: [],
   };
 
   componentDidMount() {
+    this.setState({ loading: true });
     BooksAPI.getAll().then(books => {
-      this.setState({ books: books });
+      this.setState({
+        books: books,
+        loading: false,
+      });
       console.log(books);
     });
   }
 
   shelfChanged = (book, event) => {
+    this.setState({ loading: true });
     BooksAPI.update(book, event.target.value).then(shelfs => {
       BooksAPI.getAll().then(books => {
-        this.setState({ books: books });
+        this.setState({
+          books: books,
+          loading: false,
+        });
       });
     });
   };
 
   render() {
     const { shelfs } = this.props;
-    const { books } = this.state;
+    const { books, loading } = this.state;
 
     return (
       <div>
@@ -51,11 +60,15 @@ class BookShelf extends Component {
                 <BookshelfTitle>{shelf.display_name}</BookshelfTitle>
                 <BookshelfBooks>
                   <BookGrid>
-                    {books.filter(book => (book.shelf === shelf.name ? true : false)).map(book => (
-                      <li key={book.id}>
-                        <Book book={book} onShelfChange={this.shelfChanged} />
-                      </li>
-                    ))}
+                    {loading ? (
+                      <i className="fa fa-spinner fa-pulse" />
+                    ) : (
+                      books.filter(book => (book.shelf === shelf.name ? true : false)).map(book => (
+                        <li key={book.id}>
+                          <Book book={book} onShelfChange={this.shelfChanged} />
+                        </li>
+                      ))
+                    )}
                   </BookGrid>
                 </BookshelfBooks>
               </Bookshelf>
