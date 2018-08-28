@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import BookDefaultImg from '../../assets/images/book_default.png';
 import { TheBook, BookTitle, BookAuthors, BookTop, BookShelfChanger, BookCover } from './BookStyle';
 
 class Book extends Component {
@@ -15,7 +16,11 @@ class Book extends Component {
     return (
       <TheBook>
         <BookTop>
-          <BookCover width="128" height="193" url={book.imageLinks.thumbnail} />
+          {book.imageLinks ? (
+            <BookCover width="128" height="193" url={book.imageLinks.thumbnail} />
+          ) : (
+            <BookCover width="128" height="193" url={BookDefaultImg} />
+          )}
           <BookShelfChanger>
             <select defaultValue={bookShelf} onChange={event => onShelfChange(book, event)}>
               <option value="move" disabled>
@@ -29,9 +34,11 @@ class Book extends Component {
           </BookShelfChanger>
         </BookTop>
         <BookTitle>{book.title}</BookTitle>
-        {book.authors.map(author => (
-          <BookAuthors key={author}>{author}</BookAuthors>
-        ))}
+        {book.authors ? (
+          book.authors.map(author => <BookAuthors key={author}>{author}</BookAuthors>)
+        ) : (
+          <BookAuthors>No Author Specified</BookAuthors>
+        )}
       </TheBook>
     );
   }
