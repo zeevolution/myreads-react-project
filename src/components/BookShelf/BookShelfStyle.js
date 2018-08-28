@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import addImg from '../../assets/icons/add.svg';
 
 export const ListBooksTitle = styled.div`
   padding: 10px 0;
@@ -44,5 +45,25 @@ export const BookGrid = styled.ol`
   li {
     padding: 10px 15px;
     text-align: left;
+  }
+`;
+
+export const OpenSearch = styled.div`
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+
+  a {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #2e7d32;
+    background-image: url(${addImg});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 28px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    font-size: 0;
   }
 `;

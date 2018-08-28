@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Book from '../Book/Book';
 import {
@@ -8,6 +9,7 @@ import {
   BookshelfTitle,
   BookshelfBooks,
   BookGrid,
+  OpenSearch,
 } from './BookShelfStyle';
 import * as BooksAPI from '../../utils/BooksAPI';
 
@@ -71,6 +73,9 @@ class BookShelf extends Component {
                     )}
                   </BookGrid>
                 </BookshelfBooks>
+                <OpenSearch>
+                  <Link to="/search_books">Add a Book</Link>
+                </OpenSearch>
               </Bookshelf>
             ))}
           </div>
