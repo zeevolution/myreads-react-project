@@ -66,14 +66,14 @@ class BookShelf extends Component {
                     ) : (
                       books.filter(book => (book.shelf === shelf.name ? true : false)).map(book => (
                         <li key={book.id}>
-                          <Book book={book} onShelfChange={this.shelfChanged} fromSearch={false} />
+                          <Book book={book} onShelfChange={this.shelfChanged} />
                         </li>
                       ))
                     )}
                   </BookGrid>
                 </BookshelfBooks>
                 <OpenSearch>
-                  <Link to="/search_books">Add a Book</Link>
+                  <Link to="/search">Add a Book</Link>
                 </OpenSearch>
               </Bookshelf>
             ))}

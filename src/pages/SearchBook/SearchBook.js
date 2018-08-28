@@ -30,9 +30,20 @@ class SearchBook extends Component {
             books: [],
           });
         } else {
-          this.setState({
-            loadingBooks: false,
-            books: books,
+          BooksAPI.getAll().then(myBooks => {
+            if (myBooks) {
+              myBooks.map(myBook => {
+                books.map(book => {
+                  if (myBook.id === book.id) {
+                    book.shelf = myBook.shelf;
+                  }
+                });
+              });
+            }
+            this.setState({
+              loadingBooks: false,
+              books: books,
+            });
           });
         }
       });
@@ -45,9 +56,13 @@ class SearchBook extends Component {
   };
 
   shelfChanged = (book, event) => {
+    book.shelf = event.target.value;
     this.setState({ loadingBooks: true });
     BooksAPI.update(book, event.target.value).then(shelfs => {
-      this.setState({ loadingBooks: false });
+      this.setState(prevState => ({
+        books: prevState.books.filter(prevBook => prevBook.id !== book.id).concat([book]),
+        loadingBooks: false,
+      }));
     });
   };
 
@@ -76,7 +91,7 @@ class SearchBook extends Component {
             ) : books.length ? (
               books.map(book => (
                 <li key={book.id}>
-                  <Book book={book} onShelfChange={this.shelfChanged} fromSearch={true} />
+                  <Book book={book} onShelfChange={this.shelfChanged} />
                 </li>
               ))
             ) : query ? (

@@ -7,16 +7,16 @@ class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
     onShelfChange: PropTypes.func.isRequired,
-    fromSearch: PropTypes.bool.isRequired,
   };
 
   render() {
-    const { book, onShelfChange, fromSearch } = this.props;
+    const { book, onShelfChange } = this.props;
+
     let bookShelf;
-    if (fromSearch) {
-      bookShelf = 'none';
-    } else {
+    if (book.shelf) {
       bookShelf = book.shelf;
+    } else {
+      bookShelf = 'none';
     }
 
     return (
